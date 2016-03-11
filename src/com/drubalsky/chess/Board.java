@@ -98,7 +98,8 @@ public class Board {
 		board[end.y][end.x] = board[start.y][start.x];
 		board[start.y][start.x] = null;
 		
-		if (board[end.y][end.x] instanceof King) {
+		Piece piece = board[end.y][end.x];
+		if (piece instanceof King) {
 			if (board[end.y][end.x].isWhite()) {
 				whiteKingLoc.x = end.x;
 				whiteKingLoc.y = end.y;
@@ -106,6 +107,8 @@ public class Board {
 				blackKingLoc.x = end.x;
 				blackKingLoc.y = end.y;
 			}
+		} else if (piece instanceof Pawn && ((piece.isWhite() && end.y == 0) || (!piece.isWhite() && end.y == 7))) {
+			board[end.y][end.x] = new Queen(this, new ChessPoint(end.x, end.y), piece.isWhite()); 
 		}
 	}
 
